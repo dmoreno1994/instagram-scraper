@@ -202,9 +202,9 @@ class InstagramScraper(object):
     def login(self):
         """Logs in to instagram."""
         self.session.headers.update({'Referer': BASE_URL})
-        req = self.session.get(BASE_URL)
+        self.session.get(BASE_URL)
 
-        self.session.headers.update({'X-CSRFToken': req.cookies['csrftoken']})
+        self.session.headers.update({'X-CSRFToken': self.session.cookies.get_dict()['csrftoken']})
 
         login_data = {'username': self.login_user, 'password': self.login_pass}
         login = self.session.post(LOGIN_URL, data=login_data, allow_redirects=True)
